@@ -31,16 +31,16 @@ func addTypeSwitch(a, b interface{}) interface{} {
 }
 
 func addReflection(a, b interface{}) interface{} {
-	if reflect.TypeOf(a).Kind() == reflect.Int {
+	switch reflect.TypeOf(a).Kind() {
+	case reflect.Int:
 		return a.(int) + b.(int)
-	}
-	if reflect.TypeOf(a).Kind() == reflect.Float64 {
+	case reflect.Float64:
 		return a.(float64) + b.(float64)
-	}
-	if reflect.TypeOf(a).Kind() == reflect.String {
+	case reflect.String:
 		return a.(string) + b.(string)
+	default:
+		panic("unreachable")
 	}
-	panic("unreachable")
 }
 
 func addGenerics[T int | float64 | string](a, b T) T {
